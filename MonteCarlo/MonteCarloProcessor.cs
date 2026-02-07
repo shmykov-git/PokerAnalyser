@@ -19,6 +19,7 @@ public static class MonteCarloProcessor
             {
                 var deck = new Deck(rnd);
                 var tableCards = deck.TakeTableCards(task.Case);
+                var flop = tableCards.Length <=3 ? tableCards : tableCards.Take(3).ToArray();
 
                 var isCase = task.CaseConditionFn == null;
 
@@ -27,7 +28,7 @@ public static class MonteCarloProcessor
                     var hand = deck.TakeHand();
 
                     if (task.CaseConditionFn != null)
-                        if (!task.CaseConditionFn(tableCards, hand))
+                        if (!task.CaseConditionFn(flop, hand))
                             continue;
 
                     isCase = true;
@@ -45,6 +46,7 @@ public static class MonteCarloProcessor
             }
 
             tableResult.Probability = 1.0 * combinationCounter / caseCounter;
+            tableResult.Explanation = tableResult.Probability.ToExplanation();
         }
 
         return result;

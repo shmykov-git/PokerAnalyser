@@ -13,6 +13,8 @@ public class SortedHand
     public Card LastCard => cards[^1];
     public int GetStrightRank(int i) => i == Count ? FirstCard.rank - 13 : cards[i].rank;
 
+    public SortedHand AddCards(Card[] cards) => cards.Concat(this.cards).ToArray();
+
     public static implicit operator SortedHand((char c, char s)[] vs) => new SortedHand
     {        
         cards = vs.Select(v => new Card(v)).OrderByDescending(c => c.rank).ThenBy(c => c.suit).ToArray()
