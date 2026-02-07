@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Model;
 
@@ -12,9 +13,14 @@ public class SortedHand
     public Card LastCard => cards[^1];
     public int GetStrightRank(int i) => i == Count ? FirstCard.rank - 13 : cards[i].rank;
 
-    public static implicit operator SortedHand((char c, char s)[] vs) => new SortedHand 
-    { 
-        cards = vs.Select(v => new Card(v)).OrderByDescending(c => c.rank).ThenBy(c => c.suit).ToArray() 
+    public static implicit operator SortedHand((char c, char s)[] vs) => new SortedHand
+    {        
+        cards = vs.Select(v => new Card(v)).OrderByDescending(c => c.rank).ThenBy(c => c.suit).ToArray()
+    };
+
+    public static implicit operator SortedHand(Card[] cards) => new SortedHand
+    {
+        cards = cards.OrderByDescending(c => c.rank).ThenBy(c => c.suit).ToArray()
     };
 
     public override string ToString() => string.Join("  ", cards.Select(v => $"{v.rank.ToCardStr()}{v.suit}"));
