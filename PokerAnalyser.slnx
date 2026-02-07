@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="Model.Tests/Model.Tests.csproj" />
+  <Project Path="Model/Model.csproj" />
+  <Project Path="MonteCarlo/MonteCarlo.csproj" />
+</Solution>
