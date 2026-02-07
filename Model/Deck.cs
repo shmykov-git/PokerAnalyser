@@ -20,9 +20,9 @@ public class Deck
         return cards[k];
     }
 
-    public SortedHand TakeHandWithTableCards(Card[] tableCards)
+    public SortedHand TakeHand()
     {
-        return new[] { TakeCard(), TakeCard() }.Concat(tableCards).ToArray();
+        return new[] { TakeCard(), TakeCard() };
     }
 
     public Card[] TakeTableCards(GameCase gameCase) => gameCase switch

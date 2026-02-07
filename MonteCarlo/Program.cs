@@ -1,4 +1,5 @@
 ﻿using Model;
+using MonteCarlo;
 using System.Diagnostics;
 using System.Text.Json;
 
@@ -6,81 +7,93 @@ var rnd = new Random(0);
 
 AnalyseTask[] analyseTasks = 
 [
-    //new AnalyseTask
-    //{
-    //    Case = GameCase.Flop,
-    //    IteractionCount = 100_000,
-    //    TableRange = (2, 10),
-    //    CombinationFn = hand => hand.HasPair(),
-    //    Description = "Any pair on flop"
-    //},
-    //new AnalyseTask
-    //{
-    //    Case = GameCase.Flop,
-    //    IteractionCount = 100_000,
-    //    TableRange = (2, 10),
-    //    CombinationFn = hand => hand.HasPair(Cards.RankQ),
-    //    Description = "Q-pair and higher on flop"
-    //},
-    //new AnalyseTask
-    //{
-    //    Case = GameCase.PreFlop,
-    //    IteractionCount = 100_000,
-    //    TableRange = (2, 10),
-    //    CombinationFn = hand => hand.HasPair(Cards.RankJ),
-    //    Description = "J-pair and higher preflop"
-    //},
-    //new AnalyseTask
-    //{
-    //    Case = GameCase.PreFlop,
-    //    IteractionCount = 100_000,
-    //    TableRange = (2, 10),
-    //    CombinationFn = hand => hand.HasPair(Cards.RankA),
-    //    Description = "A-pair preflop"
-    //},
     new AnalyseTask
     {
         Case = GameCase.Flop,
-        IteractionCount = 100_000,
+        IterationCount = 100_000,
+        TableRange = (2, 10),
+        CombinationFn = hand => hand.HasPair(),
+        Description = "Any pair on flop"
+    },
+    new AnalyseTask
+    {
+        Case = GameCase.Flop,
+        IterationCount = 100_000,
+        TableRange = (2, 10),
+        CombinationFn = hand => hand.HasPair(Cards.RankQ),
+        Description = "Q-pair and higher on flop"
+    },
+    new AnalyseTask
+    {
+        Case = GameCase.PreFlop,
+        IterationCount = 100_000,
+        TableRange = (2, 10),
+        CombinationFn = hand => hand.HasPair(Cards.RankJ),
+        Description = "J-pair and higher preflop"
+    },
+    new AnalyseTask
+    {
+        Case = GameCase.PreFlop,
+        IterationCount = 100_000,
         TableRange = (2, 10),
         CombinationFn = hand => hand.HasPair(Cards.RankA),
-        Description = "A-pair on flop"
-    },];
-
-async Task<AnalyseResult> AnalyseByMonteCarlo(AnalyseTask task)
-{
-    var result = new AnalyseResult() { Description = task.Description };
-
-    for (var n = task.TableRange.from; n <= task.TableRange.to; n++)
+        Description = "A-pair preflop"
+    },
+    new AnalyseTask
     {
-        var tableResult = new AnalyseResult.Table { N = n };
-        result.Tables.Add(tableResult);
-        var counter = 0;
-
-        for (var i = 0; i < task.IteractionCount; i++)
-        {
-            var deck = new Deck(rnd);
-            var tableCards = deck.TakeTableCards(task.Case);
-
-            for (var j = 0; j < n; j++)
-            {
-                var hand = deck.TakeHandWithTableCards(tableCards);
-
-                if (task.CombinationFn(hand))
-                {
-                    counter++;
-                    break;
-                }
-            }
-        }
-
-        tableResult.Probability = 1.0 * counter / task.IteractionCount;
+        Case = GameCase.Flop,
+        IterationCount = 100_000,
+        TableRange = (2, 10),
+        CombinationFn = hand => hand.HasDoubleStraightDraw(),
+        Description = "Double straight draw on flop"
+    },
+    new AnalyseTask
+    {
+        Case = GameCase.Flop,
+        IterationCount = 100_000,
+        TableRange = (2, 10),
+        CombinationFn = hand => hand.HasStraightDraw(),
+        Description = "Straight draw on flop"
+    },
+    new AnalyseTask
+    {
+        Case = GameCase.Flop,
+        CaseConditionFn = (flop, hand) => flop.HasFlushPair(),
+        IterationCount = 100_000,
+        TableRange = (2, 10),
+        CombinationFn = hand => hand.HasFlushDraw(),
+        Description = "Flush draw on flop when flush pair on flop"
+    },
+    new AnalyseTask
+    {
+        Case = GameCase.Flop,
+        CaseConditionFn = (flop, hand) => hand.cards.HasFlushPair(),
+        IterationCount = 100_000,
+        TableRange = (1, 1),
+        CombinationFn = hand => hand.HasFlushDraw(),
+        Description = "Flush draw on flop when flush pair on hand"
+    },
+    new AnalyseTask
+    {
+        Case = GameCase.Flop,
+        CaseConditionFn = (flop, hand) => hand.cards.HasConnectors(),
+        IterationCount = 100_000,
+        TableRange = (1, 1),
+        CombinationFn = hand => hand.HasStraightDraw(),
+        Description = "Straight draw on flop when connectors on hand"
+    },
+    new AnalyseTask
+    {
+        Case = GameCase.Flop,
+        CaseConditionFn = (flop, hand) => hand.cards.HasConnectors() && hand.cards.HasFlushPair(),
+        IterationCount = 100_000,
+        TableRange = (1, 1),
+        CombinationFn = hand => hand.HasStraightDraw() || hand.HasFlushDraw(),
+        Description = "Straight draw or flush draw on flop when same suit connectors on hand"
     }
+];
 
-    return result;
-}
-
-var tasks = analyseTasks.Select(AnalyseByMonteCarlo).ToArray();
+var tasks = analyseTasks.Select(t => MonteCarloProcessor.AnalyseByMonteCarlo(t, rnd)).ToArray();
 await Task.WhenAll(tasks);
 var results = tasks.Select(t => t.Result).ToArray();
 
@@ -89,6 +102,6 @@ var json = JsonSerializer.Serialize(results, new JsonSerializerOptions
     WriteIndented = true
 });
 
-Debug.WriteLine(json);
+//Debug.WriteLine(json);
 File.WriteAllText("AnalyseResult.json", json);
 

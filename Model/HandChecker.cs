@@ -223,6 +223,23 @@ public static class HandChecker
         return counts[0] >= 4 || counts[1] >= 4 || counts[2] >= 4 || counts[3] >= 4;
     }
 
+    public static bool HasFlushPair(this Card[] hand)
+    {
+        var counts = new int[4];
+
+        for (var i = 0; i < hand.Length; i++)
+        {
+            counts[hand[i].suit.ToSuitIndex()]++;
+        }
+
+        return counts[0] >= 2 || counts[1] >= 2 || counts[2] >= 2 || counts[3] >= 2;
+    }
+
+    public static bool HasConnectors(this Card[] hand)
+    {
+        return Math.Abs(hand[0].rank - hand[1].rank) == 1 && hand[0].rank != Cards.RankA && hand[1].rank != Cards.RankA;
+    }
+
     public static bool HasFullHouse(this SortedHand hand)
     {
         var setRank = -1;
