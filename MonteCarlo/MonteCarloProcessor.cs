@@ -4,20 +4,21 @@ namespace MonteCarlo;
 
 public static class MonteCarloProcessor
 {
-    public static async Task<AnalyseResult[]> Analyse(AnalyseTask[] analyseTasks, int seed = 0)
+    public static async Task<AnalyseResult[]> Analyse(AnalyseTask[] analyseTasks, int seed = 0, int? iterationCount = null)
     {
         var rnd = new Random(seed);
 
-        var tasks = analyseTasks.Select(t => Analyse(t, rnd)).ToArray();
+        var tasks = analyseTasks.Select(t => Analyse(t, rnd, iterationCount)).ToArray();
         await Task.WhenAll(tasks);
         var results = tasks.Select(t => t.Result).ToArray();
 
         return results;
     }
 
-    private static async Task<AnalyseResult> Analyse(AnalyseTask task, Random rnd)
+    private static async Task<AnalyseResult> Analyse(AnalyseTask task, Random rnd, int? iterationCount = null)
     {
         var result = new AnalyseResult() { Description = task.Description };
+        var iterCount = task.IterationCount ?? iterationCount ?? 100_000;
 
         for (var n = task.TableRange.from; n <= task.TableRange.to; n++)
         {
@@ -26,7 +27,7 @@ public static class MonteCarloProcessor
             var combinationCounter = 0;
             var caseCounter = 0;
 
-            for (var i = 0; i < task.IterationCount; i++)
+            for (var i = 0; i < iterCount; i++)
             {
                 var deck = new Deck(rnd);
                 var tableCards = deck.TakeTableCards(task.Case);

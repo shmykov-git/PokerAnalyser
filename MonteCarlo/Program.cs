@@ -9,7 +9,6 @@ AnalyseTask[] analyseTasks =
     new AnalyseTask
     {
         Case = GameCase.PreFlop,
-        IterationCount = iterationCount,
         TableRange = (2, 10),
         CombinationFn = hand => hand.HasPair(Cards.RankJ),
         Description = "J-pair and higher preflop"
@@ -17,7 +16,6 @@ AnalyseTask[] analyseTasks =
     new AnalyseTask
     {
         Case = GameCase.PreFlop,
-        IterationCount = iterationCount,
         TableRange = (2, 10),
         CombinationFn = hand => hand.HasPair(Cards.RankA),
         Description = "A-pair preflop"
@@ -25,7 +23,6 @@ AnalyseTask[] analyseTasks =
     new AnalyseTask
     {
         Case = GameCase.Flop,
-        IterationCount = iterationCount,
         TableRange = (2, 10),
         CombinationFn = hand => hand.HasPair(),
         Description = "Any pair on flop"
@@ -33,7 +30,6 @@ AnalyseTask[] analyseTasks =
     new AnalyseTask
     {
         Case = GameCase.Flop,
-        IterationCount = iterationCount,
         TableRange = (2, 10),
         CombinationFn = hand => hand.HasPair(Cards.RankQ),
         Description = "Q-pair and higher on flop"
@@ -41,7 +37,6 @@ AnalyseTask[] analyseTasks =
     new AnalyseTask
     {
         Case = GameCase.Flop,
-        IterationCount = iterationCount,
         TableRange = (2, 10),
         CombinationFn = hand => hand.HasDoubleStraightDraw(),
         Description = "Double straight draw on flop"
@@ -49,7 +44,6 @@ AnalyseTask[] analyseTasks =
     new AnalyseTask
     {
         Case = GameCase.Flop,
-        IterationCount = iterationCount,
         TableRange = (2, 10),
         CombinationFn = hand => hand.HasStraightDraw(),
         Description = "Straight draw on flop"
@@ -58,7 +52,6 @@ AnalyseTask[] analyseTasks =
     {
         Case = GameCase.Flop,
         CaseConditionFn = (flop, hand) => flop.HasFlushPair(),
-        IterationCount = iterationCount,
         TableRange = (2, 10),
         CombinationFn = hand => hand.HasFlushDraw(),
         Description = "Flush draw on flop when flush pair on flop"
@@ -67,7 +60,6 @@ AnalyseTask[] analyseTasks =
     {
         Case = GameCase.Flop,
         CaseConditionFn = (flop, hand) => hand.cards.HasFlushPair(),
-        IterationCount = iterationCount,
         TableRange = (1, 1),
         CombinationFn = hand => hand.HasFlushDraw(),
         Description = "Flush draw on flop when flush pair on hand"
@@ -76,7 +68,6 @@ AnalyseTask[] analyseTasks =
     {
         Case = GameCase.Flop,
         CaseConditionFn = (flop, hand) => hand.cards.HasConnectors(),
-        IterationCount = iterationCount,
         TableRange = (1, 1),
         CombinationFn = hand => hand.HasStraightDraw(),
         Description = "Straight draw on flop when connectors on hand"
@@ -85,7 +76,6 @@ AnalyseTask[] analyseTasks =
     {
         Case = GameCase.Flop,
         CaseConditionFn = (flop, hand) => hand.cards.HasConnectors() && hand.cards.HasFlushPair(),
-        IterationCount = iterationCount,
         TableRange = (1, 1),
         CombinationFn = hand => hand.HasStraightDraw() || hand.HasFlushDraw(),
         Description = "Straight draw or flush draw on flop when same suit connectors on hand"
@@ -94,7 +84,6 @@ AnalyseTask[] analyseTasks =
     {
         Case = GameCase.River,
         CaseConditionFn = (flop, hand) => hand.AddCards(flop).HasFlushDraw(),
-        IterationCount = iterationCount,
         TableRange = (1, 1),
         CombinationFn = hand => hand.HasFlush(),
         Description = "Flush on river when flush draw on flop"
@@ -103,7 +92,6 @@ AnalyseTask[] analyseTasks =
     {
         Case = GameCase.River,
         CaseConditionFn = (flop, hand) => hand.AddCards(flop).HasDoubleStraightDraw(),
-        IterationCount = iterationCount,
         TableRange = (1, 1),
         CombinationFn = hand => hand.HasStraight(),
         Description = "Straight on river when double straight draw on flop"
@@ -112,14 +100,13 @@ AnalyseTask[] analyseTasks =
     {
         Case = GameCase.River,
         CaseConditionFn = (flop, hand) => hand.AddCards(flop).HasStraightDraw(),
-        IterationCount = iterationCount,
         TableRange = (1, 1),
         CombinationFn = hand => hand.HasStraight(),
         Description = "Straight on river when straight draw on flop"
     }
 ];
 
-var result = MonteCarloProcessor.Analyse(analyseTasks, seed);
+var result = await MonteCarloProcessor.Analyse(analyseTasks, seed, iterationCount);
 var json = result.ToJson();
 File.WriteAllText("AnalyseResult.json", json);
 
