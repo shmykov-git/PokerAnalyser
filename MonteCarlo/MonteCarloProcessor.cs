@@ -4,18 +4,18 @@ namespace MonteCarlo;
 
 public static class MonteCarloProcessor
 {
-    public static async Task<AnalyseResult[]> AnalyseByMonteCarlo(AnalyseTask[] analyseTasks, int seed = 0)
+    public static async Task<AnalyseResult[]> Analyse(AnalyseTask[] analyseTasks, int seed = 0)
     {
         var rnd = new Random(seed);
 
-        var tasks = analyseTasks.Select(t => AnalyseByMonteCarlo(t, rnd)).ToArray();
+        var tasks = analyseTasks.Select(t => Analyse(t, rnd)).ToArray();
         await Task.WhenAll(tasks);
         var results = tasks.Select(t => t.Result).ToArray();
 
         return results;
     }
 
-    private static async Task<AnalyseResult> AnalyseByMonteCarlo(AnalyseTask task, Random rnd)
+    private static async Task<AnalyseResult> Analyse(AnalyseTask task, Random rnd)
     {
         var result = new AnalyseResult() { Description = task.Description };
 

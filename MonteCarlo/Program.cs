@@ -119,7 +119,7 @@ AnalyseTask[] analyseTasks =
     }
 ];
 
-var results = MonteCarloProcessor.AnalyseByMonteCarlo(analyseTasks, seed);
-var json = results.ToJson();
+var result = MonteCarloProcessor.Analyse(analyseTasks, seed);
+var json = result.ToJson();
 File.WriteAllText("AnalyseResult.json", json);
 
