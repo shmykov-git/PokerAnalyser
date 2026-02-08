@@ -235,10 +235,21 @@ public static class HandChecker
         return counts[0] >= 2 || counts[1] >= 2 || counts[2] >= 2 || counts[3] >= 2;
     }
 
-    public static bool HasConnectors(this Card[] hand)
+    public static bool HasHandConnectors(this Card[] hand)
     {
+        if (hand.Length != 2) throw new ArgumentException("only hand of 2");
+
         return Math.Abs(hand[0].rank - hand[1].rank) == 1 && hand[0].rank != Cards.RankA && hand[1].rank != Cards.RankA;
     }
+
+    public static bool HasHandSuited(this Card[] hand)
+    {
+        if (hand.Length != 2) throw new ArgumentException("only hand of 2");
+
+        return hand[0].suit == hand[1].suit;
+    }
+
+    public static bool HasHandSuitedConnectors(this Card[] hand) => hand.HasHandSuited() && hand.HasHandConnectors();
 
     public static bool HasFullHouse(this SortedHand hand)
     {

@@ -1,0 +1,31 @@
+﻿
+2♠  3♠  4♠  5♠  6♠  7♠  8♠  9♠  T♠  J♠  Q♠  K♠  A♠
+2♣  3♣  4♣  5♣  6♣  7♣  8♣  9♣  T♣  J♣  Q♣  K♣  A♣
+2♥  3♥  4♥  5♥  6♥  7♥  8♥  9♥  T♥  J♥  Q♥  K♥  A♥
+2♦  3♦  4♦  5♦  6♦  7♦  8♦  9♦  T♦  J♦  Q♦  K♦  A♦
+
+
+Flush secret
+You have (5♦ Q♦) hand.
+Roll 6 on a die get Flush Draw on flop.
+Take heads at the flop get Flush on the river.
+Roll 5 or 6 on a die at the turn get Flush on the river.
+(1/12) to get flush on the river.
+
+Straight Secret
+You have (7♦ 8♥) hand.
+Roll 6 on a die get Double Straight Draw on flop.
+Roll 5 or 6 on a die get Straight Draw on flop.
+When Double Straight Draw take heads twice get Straight on the river.
+When Straight Draw roll 6 on a die get Straight on the river.
+(1/24) to get straight
+
+Suited Connectors secret
+You have (5♦ 6♦) hand.
+Roll 5 or 6 on a die at the flop get Flush Draw or Straight Draw on flop
+See Flush and Straight secrets then
+(1/7) to get flush or straight
+
+Table Straight Secret
+The table roll 6 on a die get Double Straight Draw on flop (Somebody need 8♦ or J♥ to get straight). 5 players on flop.
+The table roll 5 or 6 on a die at the flop get Straight Draw on flop (Somebody need 10♦ to get straight). 5 players on flop.
