@@ -4,7 +4,7 @@ using MonteCarlo;
 var seed = 7;
 var iterationCount = 100_000;
 
-AnalyseTask[] analyseTasks = 
+AnalyseTask[] analyseTasks =
 [
     new AnalyseTask
     {
@@ -20,6 +20,7 @@ AnalyseTask[] analyseTasks =
         CombinationFn = hand => hand.HasPair(Cards.RankA),
         Description = "A-pair preflop"
     },
+
     new AnalyseTask
     {
         Case = GameCase.Flop,
@@ -80,6 +81,7 @@ AnalyseTask[] analyseTasks =
         CombinationFn = hand => hand.HasStraightDraw() || hand.HasFlushDraw(),
         Description = "Straight draw or flush draw on flop when same suit connectors on hand"
     },
+
     new AnalyseTask
     {
         Case = GameCase.River,
@@ -103,7 +105,30 @@ AnalyseTask[] analyseTasks =
         TableRange = (1, 1),
         CombinationFn = hand => hand.HasStraight(),
         Description = "Straight on river when straight draw on flop"
-    }
+    },
+    new AnalyseTask
+    {
+        Case = GameCase.River,
+        TableRange = (1, 10),
+        CombinationFn = hand => hand.HasFourOfAKind(),
+        Description = "Four of a kind on the river"
+    },
+    new AnalyseTask
+    {
+        Case = GameCase.River,
+        TableRange = (1, 10),
+        CaseConditionFn = (flop, hand) => hand.AddCards(flop).HasSet(),
+        CombinationFn = hand => hand.HasFourOfAKind(),
+        Description = "Four of a kind on the river when set on flop"
+    },
+    new AnalyseTask
+    {
+        Case = GameCase.River,
+        TableRange = (1, 10),
+        CaseConditionFn = (flop, hand) => hand.AddCards(flop).HasSet(),
+        CombinationFn = hand => hand.HasFullHouse(),
+        Description = "Full house on the river when set on flop"
+    },
 ];
 
 var result = await MonteCarloProcessor.Analyse(analyseTasks, seed, iterationCount);

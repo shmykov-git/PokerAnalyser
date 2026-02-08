@@ -46,13 +46,13 @@ public sealed class HandCheckerTests
     }
 
     [TestMethod]
-    public void HasKingOfFourTest()
+    public void HasFourOfAKindTest()
     {
         SortedHand h1 = new[] { ('6', '♠'), ('K', '♠'), ('6', '♦'), ('6', '♥'), ('6', '♣'), ('4', '♦') };
-        h1.HasKingOfFour().Should().BeTrue();
+        h1.HasFourOfAKind().Should().BeTrue();
 
         SortedHand h2 = new[] { ('K', '♠'), ('4', '♦'), ('K', '♦'), ('K', '♣'), ('5', '♦'), ('5', '♥') };
-        h2.HasKingOfFour().Should().BeFalse();
+        h2.HasFourOfAKind().Should().BeFalse();
     }
 
     [TestMethod]

@@ -48,7 +48,7 @@ public static class HandChecker
         return false;
     }
 
-    public static bool HasKingOfFour(this SortedHand hand)
+    public static bool HasFourOfAKind(this SortedHand hand)
     {
         for (var i = 0; i < hand.Count - 3; i++)
         {
