@@ -6,17 +6,16 @@ public static class MonteCarloProcessor
 {
     public static async Task<AnalyseResult[]> Analyse(AnalyseTask[] analyseTasks, int seed = 0, int? iterationCount = null)
     {
-        var rnd = new Random(seed);
-
-        var tasks = analyseTasks.Select(t => Analyse(t, rnd, iterationCount)).ToArray();
+        var tasks = analyseTasks.Select(t => Analyse(t, seed, iterationCount)).ToArray();
         await Task.WhenAll(tasks);
         var results = tasks.Select(t => t.Result).ToArray();
 
         return results;
     }
 
-    private static async Task<AnalyseResult> Analyse(AnalyseTask task, Random rnd, int? iterationCount = null)
+    private static async Task<AnalyseResult> Analyse(AnalyseTask task, int seed, int? iterationCount)
     {
+        var rnd = new Random(seed);
         var result = new AnalyseResult() { Description = task.Description };
         var iterCount = task.IterationCount ?? iterationCount ?? 100_000;
 
