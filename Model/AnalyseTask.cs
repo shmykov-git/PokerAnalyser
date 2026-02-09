@@ -2,10 +2,13 @@
 
 public class AnalyseTask 
 { 
-    public GameCase Case { get; set; }
-    public Func<SortedHand, Card[], Card[], bool>? CaseConditionFn { get; set; }
-    public int? IterationCount { get; set; }
-    public (int from, int to) TableRange { get; set; }
-    public Func<SortedHand, bool> CombinationFn { get; set; }
+    public GameCase GameCase { get; set; }
+    public Func<SortedHand, Card[], Card[], bool> ConditionFn { get; set; } = (_, _, _) => true;
+    public Func<SortedHand, Card[], Card[], bool> MyConditionFn { get; set; } = (_, _, _) => true;
+    public TableCardsCase Case { get; set; } = TableCardsCase.None;
+    public int? IterationCount { get; set; } = 100_000;
+    public (int from, int to) TableRange { get; set; } = (1, 1);
+    public Func<SortedHand, bool> CombinationFn { get; set; } = _ => true;
+    public Func<SortedHand, bool> MyCombinationFn { get; set; } = _ => true;
     public string Description { get; set; }
 }

@@ -23,41 +23,48 @@ public static class MonteCarloProcessor
         {
             var tableResult = new AnalyseResult.Table { N = n };
             result.Tables.Add(tableResult);
+            var conditionCounter = 0;
             var combinationCounter = 0;
-            var caseCounter = 0;
 
             for (var i = 0; i < iterCount; i++)
             {
                 var deck = new Deck(rnd);
-                var tableCards = deck.TakeTableCards(task.Case);
-                var flop = tableCards.Length <= 3 ? tableCards : tableCards.Take(3).ToArray();
-                var turn = tableCards.Length < 3 ? [] : tableCards.Skip(3).Take(1).ToArray();
 
-                var isCase = task.CaseConditionFn == null;
+                var nSuit = Cards.suits[rnd.Next(4)];
+                int nOponent = 1 + rnd.Next(n - 1);
 
-                for (var j = 0; j < n; j++)
-                {
-                    var hand = deck.TakeHand();
-
-                    if (task.CaseConditionFn != null)
-                        if (!task.CaseConditionFn(hand, flop, turn))
-                            continue;
-
-                    isCase = true;
-                    SortedHand fullHand = hand.cards.Concat(tableCards).ToArray();
-
-                    if (task.CombinationFn(fullHand))
+                var hands = Enumerable.Range(0, n).Select(j =>
+                    task.Case switch
                     {
-                        combinationCounter++;
-                        break;
+                        TableCardsCase.OponentHasSameSuited =>
+                            j == 0 || j == nOponent
+                            ? deck.TakeSuitedHand(nSuit)
+                            : deck.TakeHand(),
+                        _ => deck.TakeHand()
                     }
-                }
+                ).ToArray();
 
-                if (isCase)
-                    caseCounter++;
+                var tableCards = deck.TakeTableCards(task.GameCase);
+                var flop = tableCards.Length <= 3 ? tableCards : tableCards.Take(3).ToArray();
+                var turn = tableCards.Length <= 3 ? [] : tableCards.Skip(3).Take(1).ToArray();
+
+                var hasCondition = task.MyConditionFn(hands[0], flop, turn) && hands.Any(hand => task.ConditionFn(hand, flop, turn));
+
+                if (!hasCondition)
+                    continue;
+
+                conditionCounter++;
+
+                var fullHands = hands.Select(hand => hand.cards.Concat(tableCards).ToArray()).ToArray();
+
+                if (task.MyCombinationFn(fullHands[0]) && fullHands.Any(h => task.CombinationFn(h)))
+                { 
+                    combinationCounter++;
+                    continue;
+                }
             }
 
-            tableResult.Probability = 1.0 * combinationCounter / caseCounter;
+            tableResult.Probability = 1.0 * combinationCounter / conditionCounter;
             tableResult.Explanation = tableResult.Probability.ToExplanation();
         }
 

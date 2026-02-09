@@ -8,8 +8,9 @@
 Flush secret
 You have (5♦ Q♦) hand.
 Roll 6 on a die get Flush Draw on flop.
-Take heads at the flop get Flush on the river.
+Take one third at the flop get Flush on the river.
 Roll 5 or 6 on a die at the turn get Flush on the river.
+If you oponent has same suted hand then roll 6 on a die and take heads at the flop get Flush on the river.
 (1/12) to get flush on the river.
 
 Straight Secret

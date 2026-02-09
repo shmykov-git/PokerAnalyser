@@ -4,6 +4,7 @@ public static class ProbabilityExplainer
 {
     private static readonly (double p, string exp)[] values =
     [
+        (1, "100%"),
         (0.9722, "Roll 3+ on 2d6"),
         (0.9167, "Roll 4+ on 2d6"),
         (0.8333, "Roll 2+ on 1d6"),
