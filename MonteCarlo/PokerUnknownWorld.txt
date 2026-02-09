@@ -40,7 +40,9 @@ You have a pair hand (4♦ 4♥) [4/19 (~2/9) (~1/5)]:
 You hava set on the flop, turn:
  - 5/17 (~2/7) -> 3/16 (~1/5) to get full house on the river.
  - 1/25 -> 1/50 to get four of a kind on the river.
+Each ~1/7 you have a four of a kind instead of a full house on the river.
 Recomendation: Strong but rare, try to get cheep flop. Catch staight or flush.
+
 
 
 
