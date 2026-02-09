@@ -5,7 +5,7 @@ namespace Model;
 public class Deck
 {
     private readonly Random rnd;
-    private List<Card> cards = Cards.deckCards.ToList();
+    public List<Card> cards = Cards.deckCards.ToList();
 
     public Deck(Random rnd)
     {
