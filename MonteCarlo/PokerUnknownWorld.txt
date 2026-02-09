@@ -4,28 +4,38 @@
 2♥  3♥  4♥  5♥  6♥  7♥  8♥  9♥  T♥  J♥  Q♥  K♥  A♥
 2♦  3♦  4♦  5♦  6♦  7♦  8♦  9♦  T♦  J♦  Q♦  K♦  A♦
 
+[] - to the combination on the river
+
 
 Flush secret
-You have (5♦ Q♦) hand.
-Roll 6 on a die get Flush Draw on flop.
-Take one third at the flop get Flush on the river.
-Roll 5 or 6 on a die at the turn get Flush on the river.
-If you oponent has same suted hand then roll 6 on a die and take heads at the flop get Flush on the river.
-(1/12) to get flush on the river.
+You have a suited pair hand (5♦ Q♦) [1/16]:
+ - 2/17 (~1/9) to get flush draw on the flop.
+You have flush draw on the flop:
+ - 1/3 to get flush on the river.
+ - 2/7 to get flush on the river (your oppenent has same suits).
+You have flush draw on the turn:
+ - 1/5 to get flush on the river.
+Recomendation: Don't pay a lot for the flop
+
 
 Straight Secret
-You have (7♦ 8♥) hand.
-Roll 6 on a die get Double Straight Draw on flop.
-Roll 5 or 6 on a die get Straight Draw on flop.
-When Double Straight Draw take heads twice get Straight on the river.
-When Straight Draw roll 6 on a die get Straight on the river.
-(1/24) to get straight
+You have connectors hand (7♦ 8♥) [1/17]:
+ - 3/14 (~2/9) to get straight draw on the flop.
+ - 1/13 to get double straight draw on the flop.
+You have straight draw on the flop, turn:
+ - 1/7 -> 1/12 to get straight on the river (you need J).
+You have double straight draw on the flop, turn:
+ - 1/4 -> 3/19 (~1/6) to get straight on the river (you need J or 9).
+Recomendation: Pay only one blind for the flop
+
 
 Suited Connectors secret
-You have (5♦ 6♦) hand.
-Roll 5 or 6 on a die at the flop get Flush Draw or Straight Draw on flop
-See Flush and Straight secrets then
-(1/7) to get flush or straight
+You have suited connectors hand (5♦ 6♦) [2/17 (~1/9)].
+ - 2/11 (~1/5) to get double straight or flush draw flop.
+ - 3/10 (~2/7) to get straight or flush draw flop.
+Recomendation: Pay a little bit more for the flop, but not a lot
+
+
 
 Table Straight Secret
 The table roll 6 on a die get Double Straight Draw on flop (Somebody need 8♦ or J♥ to get straight). 5 players on flop.

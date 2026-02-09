@@ -83,6 +83,9 @@ public static class HandChecker
         return false;
     }
 
+    public static bool HasStraightDrawStrict(this SortedHand hand) => hand.HasStraightDraw() && !hand.HasDoubleStraightDraw() && !hand.HasStraight();
+    public static bool HasStraightDrawStrictD(this SortedHand hand) => hand.HasStraightDraw() && !hand.HasStraight();
+
     public static bool HasStraightDraw(this SortedHand hand)
     {
         var count = 0;
@@ -136,6 +139,8 @@ public static class HandChecker
 
         return false;
     }
+
+    public static bool HasDoubleStraightDrawStrict(this SortedHand hand) => hand.HasDoubleStraightDraw() && !hand.HasStraight();
 
     public static bool HasDoubleStraightDraw(this SortedHand hand)
     {
@@ -222,6 +227,8 @@ public static class HandChecker
 
         return counts[0] >= 4 || counts[1] >= 4 || counts[2] >= 4 || counts[3] >= 4;
     }
+
+    public static bool HasFlushDrawStrict(this SortedHand hand) => hand.HasFlushDraw() && !hand.HasFlush();
 
     public static bool HasFlushPair(this Card[] hand)
     {

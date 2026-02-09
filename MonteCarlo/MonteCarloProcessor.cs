@@ -68,6 +68,13 @@ public static class MonteCarloProcessor
             tableResult.Explanation = tableResult.Probability.ToExplanation();
         }
 
+        result.AverageTable = new AnalyseResult.Table
+        {
+            N = result.Tables.Average(t => t.N),
+            Probability = result.Tables.Average(t => t.Probability),
+            Explanation = result.Tables.Average(t => t.Probability).ToExplanation()
+        };
+
         return result;
     }
 }

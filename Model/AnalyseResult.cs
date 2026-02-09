@@ -6,9 +6,11 @@ public class AnalyseResult
 
     public List<Table> Tables { get; } = new();
 
+    public Table? AverageTable { get; set; }
+
     public class Table
     {
-        public int N { get; set; }
+        public decimal N { get; set; }
         public double Probability { get; set; }
         public string Explanation { get; set; }
     }
