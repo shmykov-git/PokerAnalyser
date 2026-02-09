@@ -10,11 +10,9 @@
 Flush secret
 You have a suited pair hand (5♦ Q♦) [1/16]:
  - 2/17 (~1/9) to get flush draw on the flop.
-You have flush draw on the flop:
- - 1/3 to get flush on the river.
+You have flush draw on the flop, turn:
+ - 1/3 -> 1/5 to get flush on the river.
  - 2/7 to get flush on the river (your oppenent has same suits).
-You have flush draw on the turn:
- - 1/5 to get flush on the river.
 Recomendation: Don't pay a lot for the flop
 
 
@@ -22,10 +20,10 @@ Straight Secret
 You have connectors hand (7♦ 8♥) [1/17]:
  - 3/14 (~2/9) to get straight draw on the flop.
  - 1/13 to get double straight draw on the flop.
-You have straight draw on the flop, turn:
- - 1/7 -> 1/12 to get straight on the river (you need J).
 You have double straight draw on the flop, turn:
  - 1/4 -> 3/19 (~1/6) to get straight on the river (you need J or 9).
+You have straight draw on the flop, turn:
+ - 1/7 -> 1/12 to get straight on the river (you need J).
 Recomendation: Pay only one blind for the flop
 
 
