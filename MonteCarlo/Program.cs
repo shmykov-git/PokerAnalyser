@@ -308,6 +308,57 @@ AnalyseTask[] staightOrFlushSecretTasks =
     },
 ];
 
+AnalyseTask[] pairSecretTasks =
+[
+    new AnalyseTask
+    {
+        GameCase = GameCase.River,
+        TableRange = (1, 10),
+        MyConditionFn = (hand, flop, turn) => hand.cards.HasHandPair(),
+        MyCombinationFn = hand => hand.HasSet(),
+        Description = "My set+ on the river when I have pair preflop"
+    },
+    new AnalyseTask
+    {
+        GameCase = GameCase.Flop,
+        TableRange = (1, 10),
+        MyConditionFn = (hand, flop, turn) => hand.cards.HasHandPair(),
+        MyCombinationFn = hand => hand.HasSet(),
+        Description = "My set on flop when I have pair preflop"
+    },
+    new AnalyseTask
+    {
+        GameCase = GameCase.River,
+        TableRange = (1, 10),
+        MyConditionFn = (hand, flop, turn) => hand.Join(flop).HasSetStrict(),
+        MyCombinationFn = hand => hand.HasFullHouse(),
+        Description = "My full house on river when I have set on flop"
+    },
+    new AnalyseTask
+    {
+        GameCase = GameCase.River,
+        TableRange = (1, 10),
+        MyConditionFn = (hand, flop, turn) => hand.Join(flop, turn).HasSetStrict(),
+        MyCombinationFn = hand => hand.HasFullHouse(),
+        Description = "My full house on river when I have set on turn"
+    },
+    new AnalyseTask
+    {
+        GameCase = GameCase.River,
+        TableRange = (1, 10),
+        MyConditionFn = (hand, flop, turn) => hand.Join(flop).HasSetStrict(),
+        MyCombinationFn = hand => hand.HasFourOfAKind(),
+        Description = "My four of a kind on river when I have set on flop"
+    },
+    new AnalyseTask
+    {
+        GameCase = GameCase.River,
+        TableRange = (1, 10),
+        MyConditionFn = (hand, flop, turn) => hand.Join(flop, turn).HasSetStrict(),
+        MyCombinationFn = hand => hand.HasFourOfAKind(),
+        Description = "My four of a kind on river when I have set on turn"
+    },
+];
 
 AnalyseTask[] analyseTasks = new[]
 {
@@ -317,7 +368,8 @@ AnalyseTask[] analyseTasks = new[]
     //riverFlopTasks,
     //flushSecretTasks,
     //staightSecretTasks,
-    staightOrFlushSecretTasks,
+    //staightOrFlushSecretTasks,
+    pairSecretTasks,
 }.SelectMany(v => v).ToArray();
 
 

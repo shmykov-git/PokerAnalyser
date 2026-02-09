@@ -34,6 +34,15 @@ You have suited connectors hand (5♦ 6♦) [2/17 (~1/9)].
 Recomendation: Pay a little bit more for the flop, but not a lot
 
 
+Pair Secret
+You have a pair hand (4♦ 4♥) [4/19 (~2/9) (~1/5)]:
+ - 2/17 (~1/8) to get set on the flop.
+You hava set on the flop, turn:
+ - 5/17 (~2/7) -> 3/16 (~1/5) to get full house on the river.
+ - 1/25 -> 1/50 to get four of a kind on the river.
+Recomendation: Strong but rare, try to get cheep flop. Catch staight or flush.
+
+
 
 Table Straight Secret
 The table roll 6 on a die get Double Straight Draw on flop (Somebody need 8♦ or J♥ to get straight). 5 players on flop.

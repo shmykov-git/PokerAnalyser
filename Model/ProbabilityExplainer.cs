@@ -2,7 +2,9 @@
 
 public static class ProbabilityExplainer
 {
-    private static readonly (double p, string exp)[] values = Enumerable.Range(1, 19).SelectMany(a => Enumerable.Range(1, 19).Select(b => (a, b)))
+    private static readonly (double p, string exp)[] values = 
+        Enumerable.Range(1, 19).SelectMany(a => Enumerable.Range(1, 19).Select(b => (a, b)))
+        .Concat(Enumerable.Range(0, 16).Select(i => (a:1, b:20 + i*5)))
         .GroupBy(v => ((decimal)v.a / v.b))
         .Select(gv => new
         {
@@ -13,7 +15,7 @@ public static class ProbabilityExplainer
         .Select(v => (v.p, $"{v.pair.a}/{v.pair.b}"))
         .ToArray();
 
-    private static readonly (double p, string exp)[] smallValues = Enumerable.Range(1, 9).SelectMany(a => Enumerable.Range(1, 9).Select(b => (a, b)))
+    private static readonly (double p, string exp)[] approximateValues = Enumerable.Range(1, 9).SelectMany(a => Enumerable.Range(1, 9).Select(b => (a, b)))
         .GroupBy(v => ((decimal)v.a / v.b))
         .Select(gv => new
         {
@@ -28,7 +30,7 @@ public static class ProbabilityExplainer
     public static string ToExplanation(this double p)
     {
         var v = values.MinBy(v => Math.Abs(v.p - p) / v.p).exp;
-        var sv = smallValues.MinBy(v => Math.Abs(v.p - p) / v.p).exp;
+        var sv = approximateValues.MinBy(v => Math.Abs(v.p - p) / v.p).exp;
 
         return v == sv || v.StartsWith("1") ? v : $"{v} (~{sv})";
     }

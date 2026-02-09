@@ -37,6 +37,8 @@ public static class HandChecker
         return false;
     }
 
+    public static bool HasSetStrict(this SortedHand hand) => hand.HasSet() && !hand.HasFourOfAKind() && !hand.HasFullHouse();
+
     public static bool HasSet(this SortedHand hand)
     {
         for (var i = 0; i < hand.Count - 2; i++)
@@ -216,6 +218,8 @@ public static class HandChecker
         return counts[0] >= 5 || counts[1] >= 5 || counts[2] >= 5 || counts[3] >= 5;
     }
 
+    public static bool HasFlushDrawStrict(this SortedHand hand) => hand.HasFlushDraw() && !hand.HasFlush();
+
     public static bool HasFlushDraw(this SortedHand hand)
     {
         var counts = new int[4];
@@ -228,7 +232,12 @@ public static class HandChecker
         return counts[0] >= 4 || counts[1] >= 4 || counts[2] >= 4 || counts[3] >= 4;
     }
 
-    public static bool HasFlushDrawStrict(this SortedHand hand) => hand.HasFlushDraw() && !hand.HasFlush();
+    public static bool HasHandPair(this Card[] hand) 
+    { 
+        if (hand.Length != 2) throw new ArgumentException("only hand of 2");
+        
+        return hand[0].rank == hand[1].rank;
+    }
 
     public static bool HasFlushPair(this Card[] hand)
     {
