@@ -55,13 +55,15 @@ public static class MonteCarloProcessor
 
                 conditionCounter++;
 
-                var fullHands = hands.Select(hand => hand.cards.Concat(tableCards).ToArray()).ToArray();
+                var fullHands = hands.Select(hand => new SortedHand(hand.cards.Concat(tableCards))).ToArray();
+                
+                var hasCombination = 
+                    task.MyCombinationFn(fullHands[0]) && 
+                    fullHands.Any(h => task.CombinationFn(h)) &&
+                    task.CombinationsFn(fullHands);
 
-                if (task.MyCombinationFn(fullHands[0]) && fullHands.Any(h => task.CombinationFn(h)))
-                { 
+                if (hasCombination)
                     combinationCounter++;
-                    continue;
-                }
             }
 
             tableResult.Probability = 1.0 * combinationCounter / conditionCounter;

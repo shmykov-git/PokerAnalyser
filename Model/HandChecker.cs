@@ -2,6 +2,8 @@
 
 public static class HandChecker
 {
+    public static bool HasPairStrict(this SortedHand hand) => hand.HasPair() && !hand.HasSet() && !hand.HasTwoPairs() && !hand.HasFullHouse() && !hand.HasFourOfAKind();
+
     public static bool HasPair(this SortedHand hand, int minRank = 2)
     {
         for (var i = 0; i < hand.Count - 1; i++)
@@ -15,6 +17,8 @@ public static class HandChecker
 
         return false;
     }
+
+    public static bool HasTwoPairsStrict(this SortedHand hand) => hand.HasTwoPairs() && !hand.HasSet() && !hand.HasFullHouse() && !hand.HasFourOfAKind();
 
     public static bool HasTwoPairs(this SortedHand hand, int minRank = 2)
     {

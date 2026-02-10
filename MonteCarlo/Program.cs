@@ -308,7 +308,7 @@ AnalyseTask[] staightOrFlushSecretTasks =
     },
 ];
 
-AnalyseTask[] pairSecretTasks =
+AnalyseTask[] setSecretTasks =
 [
     new AnalyseTask
     {
@@ -358,6 +358,45 @@ AnalyseTask[] pairSecretTasks =
         MyCombinationFn = hand => hand.HasFourOfAKind(),
         Description = "My four of a kind on river when I have set on turn"
     },
+    new AnalyseTask
+    {
+        GameCase = GameCase.River,
+        TableRange = (1, 10),
+        MyConditionFn = (hand, flop, turn) => hand.Join(flop).HasPairStrict(),
+        MyCombinationFn = hand => hand.HasSet(),
+        Description = "My set+ on river when I still have only pair flop"
+    },
+    new AnalyseTask
+    {
+        GameCase = GameCase.River,
+        TableRange = (1, 10),
+        MyConditionFn = (hand, flop, turn) => hand.Join(flop).HasTwoPairsStrict(),
+        MyCombinationFn = hand => hand.HasSet(),
+        Description = "My set+ on river when I still have two pairs flop"
+    },
+    new AnalyseTask
+    {
+        GameCase = GameCase.PreFlop,
+        TableRange = (1, 10),
+        CombinationFn = hand => hand.HasPair(),
+        Description = "Somebody has pair preflop"
+    },
+    new AnalyseTask
+    {
+        GameCase = GameCase.PreFlop,
+        TableRange = (2, 10),
+        MyConditionFn = (hand, flop, turn) => hand.cards.HasHandPair(),
+        CombinationsFn = hands => hands.Skip(1).Any(h => h.HasPair()),
+        Description = "Somebody also has pair preflop when I have pair preflop"
+    },
+    new AnalyseTask
+    {
+        GameCase = GameCase.Flop,
+        TableRange = (2, 10),
+        MyConditionFn = (hand, flop, turn) => hand.Join(flop).HasSetStrict(),
+        CombinationsFn = hands => hands.Skip(1).Any(h => h.HasSet()),
+        Description = "Somebody also has set flop when I have set flop"
+    },
 ];
 
 AnalyseTask[] analyseTasks = new[]
@@ -369,7 +408,7 @@ AnalyseTask[] analyseTasks = new[]
     //flushSecretTasks,
     //staightSecretTasks,
     //staightOrFlushSecretTasks,
-    pairSecretTasks,
+    setSecretTasks,
 }.SelectMany(v => v).ToArray();
 
 
