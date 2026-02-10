@@ -47,7 +47,7 @@ You still have this pair only on the flop:
  - 1/11 to get set+ on the river
 1/2 - 1/3 somebody has pair preflop on 10 - 6 players table
 1/4 - 3/7 somebody has pair preflop when you have pair preflop on 10 - 6 players table
-1/4 - 1/6 somebody has set on flop when you have set on flop on 6 - 3 on flop players
+1/3 - 1/4 somebody has set on flop when you have set on flop on 10 - 6 players table
 Recomendation: Strong but rare, try to get cheep flop. Catch staight or flush. Still alive having two pairs on the flop.
 Be carefull with pair fights on the preflop.
 Be carefull with set fights and fullhouse fights on the flop and river. 1/3 (N9) - you have an opponent on the flop.
