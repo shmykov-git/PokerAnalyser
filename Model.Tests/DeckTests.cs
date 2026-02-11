@@ -30,4 +30,15 @@ public sealed class DeckTests
         hand.HasFlush().Should().BeTrue();
         Cards.deckCards.Should().BeEquivalentTo(actualDeck.cards);
     }
+
+    [TestMethod]
+    public void TakeExactCardTest()
+    {
+        var deck = new Deck(new Random(0));
+        SortedHand hand = new[] { deck.TakeExactCard("J♦"), deck.TakeExactCard("J♠") };
+        SortedHand actualDeck = deck.cards.Concat(hand.cards).ToArray();
+
+        hand.HasPair().Should().BeTrue();
+        Cards.deckCards.Should().BeEquivalentTo(actualDeck.cards);
+    }
 }

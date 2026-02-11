@@ -52,6 +52,17 @@ Recomendation: Strong but rare, try to get cheep flop. Catch staight or flush. S
 Be carefull with pair fights on the preflop.
 Be carefull with set fights and fullhouse fights on the flop and river. 1/3 (N9) - you have an opponent on the flop.
 
+Pair Secret
+You have (J♦ J♥):
+ - 1/10 somebody has AA, KK, QQ at table 8
+ Recomendation: Raising is a good strategy, but be careful somebody all-in before you
+You have (A♦ J♥)
+ - 3/4 - 1/2 somebody has A? preflop on 10 - 6 players table
+ - 1/5 - 1/7 somebody has AA, AK, AQ at table 10 - 6 players table
+ - 1/4 - 1/6 somebody has AA, AK, AQ, KK, QQ, JJ at table 9 - 6 players table
+ - ~1/4 you have A pair on the river when you have A high hand preflop.
+ - 1/6 you have AA on flop when you have A high hand preflop.
+ Recomendation: Raising is a good strategy, but be careful somebody all-in before you
 
 
 Table Straight Secret

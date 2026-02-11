@@ -12,6 +12,13 @@ public class Deck
         this.rnd = rnd;
     }
 
+    public Card TakeExactCard(Card card)
+    {
+        var k = cards.IndexOf(card);
+        cards.RemoveAt(k);
+        return card;
+    }
+
     public Card TakeCard()
     {
         var k = rnd.Next(0, cards.Count);
@@ -41,6 +48,12 @@ public class Deck
     public SortedHand TakeSuitedHand(char suit)
     {
         return new[] { TakeSuitedCard(suit), TakeSuitedCard(suit) };
+    }
+
+    public SortedHand TakeExactHand(Card[] hand)
+    {
+        hand.ThrowIfNotHand();
+        return new[] { TakeExactCard(hand[0]), TakeExactCard(hand[1]) };
     }
 
     public Card[] TakeTableCards(GameCase gameCase) => gameCase switch

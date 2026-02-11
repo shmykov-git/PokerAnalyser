@@ -2,6 +2,24 @@
 
 public static class HandChecker
 {
+    public static bool HasCard(this SortedHand hand, int rank)
+    {
+        for (var i = 0; i < hand.Count - 1; i++)
+        {
+            if (hand[i].rank == rank)
+                return true;
+        }
+
+        return false;
+    }
+
+    public static bool HasAHigh(this SortedHand hand, int minRank = 2)
+    {
+        return 
+            hand[0].rank == Cards.RankA && 
+            hand[1].rank >= minRank;
+    }
+
     public static bool HasPairStrict(this SortedHand hand) => hand.HasPair() && !hand.HasSet() && !hand.HasTwoPairs() && !hand.HasFullHouse() && !hand.HasFourOfAKind();
 
     public static bool HasPair(this SortedHand hand, int minRank = 2)
@@ -16,6 +34,13 @@ public static class HandChecker
         }
 
         return false;
+    }
+
+    public static bool HasAPairHand(this SortedHand hand, int minRank = 2)
+    {
+        
+
+        return hand[0].rank == Cards.RankA && hand[1].rank >= minRank;
     }
 
     public static bool HasTwoPairsStrict(this SortedHand hand) => hand.HasTwoPairs() && !hand.HasSet() && !hand.HasFullHouse() && !hand.HasFourOfAKind();
@@ -237,9 +262,8 @@ public static class HandChecker
     }
 
     public static bool HasHandPair(this Card[] hand) 
-    { 
-        if (hand.Length != 2) throw new ArgumentException("only hand of 2");
-        
+    {
+        hand.ThrowIfNotHand();
         return hand[0].rank == hand[1].rank;
     }
 
@@ -257,15 +281,13 @@ public static class HandChecker
 
     public static bool HasHandConnectors(this Card[] hand)
     {
-        if (hand.Length != 2) throw new ArgumentException("only hand of 2");
-
+        hand.ThrowIfNotHand();
         return Math.Abs(hand[0].rank - hand[1].rank) == 1 && hand[0].rank != Cards.RankA && hand[1].rank != Cards.RankA;
     }
 
     public static bool HasHandSuited(this Card[] hand)
     {
-        if (hand.Length != 2) throw new ArgumentException("only hand of 2");
-
+        hand.ThrowIfNotHand();
         return hand[0].suit == hand[1].suit;
     }
 

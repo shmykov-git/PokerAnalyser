@@ -24,5 +24,5 @@ public class SortedHand
     public static implicit operator SortedHand((char c, char s)[] vs) => new SortedHand(vs.Select(v => new Card(v)));
     public static implicit operator SortedHand(Card[] cards) => new SortedHand(cards);
 
-    public override string ToString() => string.Join("  ", cards.Select(v => $"{v.rank.ToCardStr()}{v.suit}"));
+    public override string ToString() => string.Join("  ", cards);
 }

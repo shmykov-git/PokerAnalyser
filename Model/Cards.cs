@@ -18,4 +18,12 @@ public static class Cards
     public static int ToRank(this char c) => ranks[c];
     public static char ToCard(this int r) => cards[r - 2];
     public static string ToCardStr(this int r) => r.ToCard().ToString().Replace("T", "10");
+    
+    public static void ThrowIfNotHand(this Card[] hand)
+    {
+        if (hand.Length != 2)
+            throw new ArgumentException("Is not a hand of 2 cards");
+    }
+
+    public static void ThrowIfNotHand(SortedHand hand) => ThrowIfNotHand(hand.cards);
 }

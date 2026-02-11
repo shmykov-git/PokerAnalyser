@@ -23,8 +23,6 @@ AnalyseTask[] preflopTasks =
     },
 ];
 
-
-
 AnalyseTask[] flopTasks =
 [
     new AnalyseTask
@@ -89,8 +87,6 @@ AnalyseTask[] flopTasks =
     },
 ];
 
-
-
 AnalyseTask[] riverHandEstimationTasks =
 [
     new AnalyseTask
@@ -109,8 +105,6 @@ AnalyseTask[] riverHandEstimationTasks =
     },
 ];
 
-
-
 AnalyseTask[] riverTasks =
 [
     new AnalyseTask
@@ -121,8 +115,6 @@ AnalyseTask[] riverTasks =
         Description = "Four of a kind on the river"
     },
 ];
-
-
 
 AnalyseTask[] riverFlopTasks =
 [
@@ -172,8 +164,6 @@ AnalyseTask[] riverFlopTasks =
         Description = "Flush on river when flush draw on turn"
     },
 ];
-
-
 
 AnalyseTask[] flushSecretTasks =
 [
@@ -399,6 +389,58 @@ AnalyseTask[] setSecretTasks =
     },
 ];
 
+AnalyseTask[] pairSecretTasks =
+[
+    new AnalyseTask
+    {
+        GameCase = GameCase.PreFlop,
+        TableRange = (2, 10),
+        MyHand = [('J', '♥'), ('J', '♦')],
+        CombinationsFn = hands => hands.Skip(1).Any(h => h.HasPair(Cards.RankQ)),
+        Description = "Somebody has AA, KK or QQ preflop when I have JJ preflop"
+    },
+    new AnalyseTask
+    {
+        GameCase = GameCase.PreFlop,
+        TableRange = (2, 10),
+        MyHand = [('A', '♥'), ('2', '♦')],
+        CombinationsFn = hands => hands.Skip(1).Any(h => h.HasCard(Cards.RankA)),
+        Description = "Somebody has A? preflop when I have A? preflop"
+    },
+    new AnalyseTask
+    {
+        GameCase = GameCase.PreFlop,
+        TableRange = (2, 10),
+        MyHand = [('A', '♥'), ('J', '♦')],
+        CombinationsFn = hands => hands.Skip(1).Any(h => h.HasAHigh(Cards.RankQ)),
+        Description = "Somebody has AA, AK, AQ preflop when I have AJ preflop"
+    },
+    new AnalyseTask
+    {
+        GameCase = GameCase.PreFlop,
+        TableRange = (2, 10),
+        MyHand = [('A', '♥'), ('J', '♦')],
+        CombinationsFn = hands => hands.Skip(1).Any(h => h.HasAHigh(Cards.RankQ) || h.HasPair(Cards.RankJ)),
+        Description = "Somebody has AA, AK, AQ, KK, QQ, JJ preflop when I have AJ preflop"
+    },
+    new AnalyseTask
+    {
+        GameCase = GameCase.River,
+        TableRange = (1, 10),
+        MyHand = ["A♥", "2♦"],
+        MyCombinationFn = hand => hand.HasPair(Cards.RankA),
+        Description = "I have AA on the river when I have A? preflop"
+    },    
+    new AnalyseTask
+    {
+        GameCase = GameCase.Flop,
+        TableRange = (1, 10),
+        MyHand = ["A♥", "2♦"],
+        MyCombinationFn = hand => hand.HasPair(Cards.RankA),
+        Description = "I have AA on the flop when I have A? preflop"
+    },
+];
+
 AnalyseTask[] analyseTasks = new[]
 {
     //preflopTasks,
@@ -408,7 +450,8 @@ AnalyseTask[] analyseTasks = new[]
     //flushSecretTasks,
     //staightSecretTasks,
     //staightOrFlushSecretTasks,
-    setSecretTasks,
+    //setSecretTasks,
+    pairSecretTasks,
 }.SelectMany(v => v).ToArray();
 
 
