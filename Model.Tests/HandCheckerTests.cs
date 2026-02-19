@@ -184,4 +184,15 @@ public sealed class HandCheckerTests
         SortedHand h2 = new[] { ('K', '♠'), ('4', '♠'), ('8', '♠'), ('7', '♠'), ('5', '♠'), ('6', '♠') };
         h2.HasStraightFlush().Should().BeTrue();
     }
+
+
+    [TestMethod]
+    public void HasHandRankTest()
+    {
+        SortedHand h1 = new[] { "A♦", "A♠" };
+        h1.HasHandRankPair(["AA", "KK", "QQ", "AK"]).Should().BeTrue();
+
+        SortedHand h2 = new[] { "A♦", "K♠" };
+        h2.HasHandRankPair(["AA", "KK", "QQ", "AK"]).Should().BeTrue();
+    }
 }

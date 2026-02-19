@@ -29,6 +29,9 @@ public struct Card : IEquatable<Card>
         suit = v.s;
     }
 
+    public static bool operator ==(Card a, Card b) => a.Equals(b);
+    public static bool operator !=(Card a, Card b) => !a.Equals(b);
+
     public static implicit operator Card((char c, char s) v) => new Card(v);
     public static implicit operator Card(string v) => new Card(v);
 

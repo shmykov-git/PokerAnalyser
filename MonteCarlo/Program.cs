@@ -1,4 +1,5 @@
 ﻿using Model;
+using Model.Extensions;
 using MonteCarlo;
 
 var seed = 7;
@@ -430,14 +431,31 @@ AnalyseTask[] pairSecretTasks =
         MyHand = ["A♥", "2♦"],
         MyCombinationFn = hand => hand.HasPair(Cards.RankA),
         Description = "I have AA on the river when I have A? preflop"
-    },    
+    },
+];
+
+AnalyseTask[] handSecretTasks =
+[
     new AnalyseTask
     {
-        GameCase = GameCase.Flop,
+        GameCase = GameCase.PreFlop,
         TableRange = (1, 10),
-        MyHand = ["A♥", "2♦"],
-        MyCombinationFn = hand => hand.HasPair(Cards.RankA),
-        Description = "I have AA on the flop when I have A? preflop"
+        MyCombinationFn = hand => hand.HasHandRankPair(["AA", "KK", "QQ", "AK"]),
+        Description = "I have AA, KK, QQ, AK on the flop"
+    },
+    new AnalyseTask
+    {
+        GameCase = GameCase.PreFlop,
+        TableRange = (1, 10),
+        MyCombinationFn = hand => hand.HasHandRankPair(["AA", "KK", "QQ", "JJ", "TT", "AK", "AQ"]),
+        Description = "I have AA, KK, QQ, JJ, TT, AK, AQ on the flop"
+    },
+    new AnalyseTask
+    {
+        GameCase = GameCase.PreFlop,
+        TableRange = (1, 10),
+        CombinationsFn = hands => hands.Any(h=>h[0].rank == Cards.RankA),
+        Description = "Somebody has A"
     },
 ];
 
@@ -451,7 +469,8 @@ AnalyseTask[] analyseTasks = new[]
     //staightSecretTasks,
     //staightOrFlushSecretTasks,
     //setSecretTasks,
-    pairSecretTasks,
+    //pairSecretTasks,
+    handSecretTasks
 }.SelectMany(v => v).ToArray();
 
 

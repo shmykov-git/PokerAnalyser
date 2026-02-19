@@ -25,5 +25,5 @@ public static class Cards
             throw new ArgumentException("Is not a hand of 2 cards");
     }
 
-    public static void ThrowIfNotHand(SortedHand hand) => ThrowIfNotHand(hand.cards);
+    public static void ThrowIfNotHand(this SortedHand hand) => ThrowIfNotHand(hand.cards);
 }

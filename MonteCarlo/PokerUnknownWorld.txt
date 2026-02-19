@@ -65,6 +65,15 @@ You have (A♦ J♥)
  Recomendation: Raising is a good strategy, but be careful somebody all-in before you
 
 
+Hand preflop probabilities:
+AA, KK, QQ, AK: 1/40
+AA, KK, QQ, JJ, TT, AK, AQ: 1/20
+Recomendation: 
+The same oponent cannon move to big raise very often, only once per 2-3 circles on table 10. Catch bleff strategy
+So you do. Laky hand is very rare
+
+
+
 Table Straight Secret
 The table roll 6 on a die get Double Straight Draw on flop (Somebody need 8♦ or J♥ to get straight). 5 players on flop.
 The table roll 5 or 6 on a die at the flop get Straight Draw on flop (Somebody need 10♦ to get straight). 5 players on flop.

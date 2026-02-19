@@ -22,6 +22,7 @@ public class SortedHand
     public SortedHand Join(Card[] flop, Card[] turn) => cards.Concat(flop).Concat(turn).ToArray();
 
     public static implicit operator SortedHand((char c, char s)[] vs) => new SortedHand(vs.Select(v => new Card(v)));
+    public static implicit operator SortedHand(string[] vs) => new SortedHand(vs.Select(v => new Card(v)));
     public static implicit operator SortedHand(Card[] cards) => new SortedHand(cards);
 
     public override string ToString() => string.Join("  ", cards);

@@ -4,7 +4,7 @@ public static class ProbabilityExplainer
 {
     private static readonly (double p, string exp)[] values = 
         Enumerable.Range(1, 19).SelectMany(a => Enumerable.Range(1, 19).Select(b => (a, b)))
-        .Concat(Enumerable.Range(0, 16).Select(i => (a:1, b:20 + i*5)))
+        .Concat(Enumerable.Range(0, 17).Select(i => (a:1, b:20 + i*5)))
         .GroupBy(v => ((decimal)v.a / v.b))
         .Select(gv => new
         {

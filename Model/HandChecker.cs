@@ -1,7 +1,30 @@
-﻿namespace Model;
+﻿using Model.Extensions;
+using System.Reflection.Metadata;
+
+namespace Model;
 
 public static class HandChecker
 {
+    public static bool HasHandRankPair(this SortedHand hand, params string[] handRanks)
+    {
+        hand.ThrowIfNotHand();
+        handRanks.ForEach(hand => { if (hand.Length != 2) throw new ArgumentException("Invalid hand ranks"); });
+
+        bool Equals(Card[] a, string b) => (a[0].rank == b[0].ToRank() && a[1].rank == b[1].ToRank()) || (a[0].rank == b[1].ToRank() && a[1].rank == b[0].ToRank());
+
+        return handRanks.Any(hr => Equals(hand.cards, hr));
+    }
+
+    public static bool HasHand(this SortedHand hand, params Card[][] hands)
+    {
+        hand.ThrowIfNotHand();
+        hands.ForEach(hand => hand.ThrowIfNotHand());
+
+        bool Equals(Card[] a, Card[] b) => (a[0] == b[0] && a[1] == b[1]) || (a[0] == b[1] && a[1] == b[0]);
+
+        return hands.Any(h => Equals(hand.cards, h));
+    }
+
     public static bool HasCard(this SortedHand hand, int rank)
     {
         for (var i = 0; i < hand.Count - 1; i++)

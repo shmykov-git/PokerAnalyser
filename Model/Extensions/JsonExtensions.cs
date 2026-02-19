@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace MonteCarlo;
+namespace Model.Extensions;
 
 public static class JsonExtensions
 {
