@@ -62,7 +62,7 @@ You have (A♦ J♥)
  - 1/4 - 1/6 somebody has AA, AK, AQ, KK, QQ, JJ at table 9 - 6 players table
  - ~1/4 you have A pair on the river when you have A high hand preflop.
  - ~4/9 you have A pair or J pair on the flop
-  - recomendation: Raise to have table 3 on the flop (~4/9 vs ~2/9 to catch you), else you have (~4/9 vs ~1/2 to catch you)
+  - recomendation: Raise to have table 3 on the flop (~4/9 vs ~2/9 to catch you), else you have (~4/9 vs ~1/2 to catch you). Be carefull for big rerase
  - 1/6 you have AA on flop when you have A high hand preflop.
   Recomendation: Raising is a good strategy, but be careful somebody all-in before you
 
