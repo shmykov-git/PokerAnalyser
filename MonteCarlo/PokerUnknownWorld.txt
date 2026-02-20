@@ -61,9 +61,14 @@ You have (A♦ J♥)
  - 1/5 - 1/7 somebody has AA, AK, AQ at table 10 - 6 players table
  - 1/4 - 1/6 somebody has AA, AK, AQ, KK, QQ, JJ at table 9 - 6 players table
  - ~1/4 you have A pair on the river when you have A high hand preflop.
+ - ~4/9 you have A pair or J pair on the flop
+  - recomendation: Raise to have table 3 on the flop (~4/9 vs ~2/9 to catch you), else you have (~4/9 vs ~1/2 to catch you)
  - 1/6 you have AA on flop when you have A high hand preflop.
- Recomendation: Raising is a good strategy, but be careful somebody all-in before you
+  Recomendation: Raising is a good strategy, but be careful somebody all-in before you
 
+
+Hight card secrete
+You have 
 
 Hand preflop probabilities:
 AA, KK, QQ, AK: 1/40
@@ -73,7 +78,10 @@ The same oponent cannon move to big raise very often, only once per 2-3 circles 
 So you do. Laky hand is very rare
 
 
-
 Table Straight Secret
 The table roll 6 on a die get Double Straight Draw on flop (Somebody need 8♦ or J♥ to get straight). 5 players on flop.
 The table roll 5 or 6 on a die at the flop get Straight Draw on flop (Somebody need 10♦ to get straight). 5 players on flop.
+~1/2 somebody has combination two pair or more on flop for table 7
+~2/9 somebody has combination two pair or more on flop for table 3
+~1/8 somebody has combination two pair or more on flop for table 2
+

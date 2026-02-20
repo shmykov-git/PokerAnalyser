@@ -72,7 +72,8 @@ public static class MonteCarloProcessor
                 var hasCombination = 
                     task.MyCombinationFn(fullHands[0]) && 
                     fullHands.Any(h => task.CombinationFn(h)) &&
-                    task.CombinationsFn(fullHands);
+                    task.CombinationsFn(fullHands) &&
+                    task.OtherCombinationsFn(fullHands.Skip(1).ToArray());
 
                 if (hasCombination)
                     combinationCounter++;

@@ -457,6 +457,23 @@ AnalyseTask[] handSecretTasks =
         CombinationsFn = hands => hands.Any(h=>h[0].rank == Cards.RankA),
         Description = "Somebody has A"
     },
+    new AnalyseTask
+    {
+        GameCase = GameCase.Flop,
+        TableRange = (1, 10),
+        MyHand = ["A♥", "Q♥"],
+        MyCombinationFn = hand => hand.HasPair(),
+        Description = "I have pair on flop when I have no preflop pair"
+    },
+    new AnalyseTask
+    {
+        GameCase = GameCase.Flop,
+        TableRange = (1, 10),
+        MyHand = ["A♥", "Q♥"],
+        MyConditionFn = (hand, flop, _) => hand.Join(flop).HasTwoPairsStrict(),
+        OtherCombinationsFn = hands => hands.Any(hand => hand.HasTwoPairs() || hand.HasStraight() || hand.HasSet() || hand.HasFlush()),
+        Description = "Somebody has two pair or hight when I have only pair on the flop"
+    },
 ];
 
 AnalyseTask[] analyseTasks = new[]

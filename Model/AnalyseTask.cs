@@ -11,6 +11,7 @@ public class AnalyseTask
     public (int from, int to) TableRange { get; set; } = (1, 1);
     public Func<SortedHand, bool> CombinationFn { get; set; } = _ => true;
     public Func<SortedHand[], bool> CombinationsFn { get; set; } = _ => true;
+    public Func<SortedHand[], bool> OtherCombinationsFn { get; set; } = _ => true;
     public Func<SortedHand, bool> MyCombinationFn { get; set; } = _ => true;
     public string Description { get; set; }
 }
