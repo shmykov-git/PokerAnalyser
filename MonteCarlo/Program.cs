@@ -474,6 +474,30 @@ AnalyseTask[] handSecretTasks =
         OtherCombinationsFn = hands => hands.Any(hand => hand.HasTwoPairs() || hand.HasStraight() || hand.HasSet() || hand.HasFlush()),
         Description = "Somebody has two pair or hight when I have only pair on the flop"
     },
+    new AnalyseTask
+    {
+        GameCase = GameCase.Flop,
+        TableRange = (1, 10),
+        MyHand = ["5♥", "6♥"],
+        MyCombinationFn = hand => hand.HasPair() || hand.HasStraightDraw() || hand.HasFlushDraw(),
+        Description = "I have suited connectors preflop. My continuation probablities on the flop"
+    },
+    new AnalyseTask
+    {
+        GameCase = GameCase.Flop,
+        TableRange = (1, 10),
+        MyHand = ["5♥", "6♥"],
+        MyCombinationFn = hand => hand.HasPair(),
+        Description = "I have suited connectors preflop. My pair continuation probablities on the flop"
+    },
+    new AnalyseTask
+    {
+        GameCase = GameCase.Flop,
+        TableRange = (1, 10),
+        MyHand = ["5♥", "6♥"],
+        MyCombinationFn = hand => hand.HasStraightDraw() || hand.HasFlushDraw(),
+        Description = "I have suited connectors preflop. My strong continuation probablities on the flop"
+    },
 ];
 
 AnalyseTask[] analyseTasks = new[]
