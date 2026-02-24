@@ -498,6 +498,14 @@ AnalyseTask[] handSecretTasks =
         MyCombinationFn = hand => hand.HasStraightDraw() || hand.HasFlushDraw(),
         Description = "I have suited connectors preflop. My strong continuation probablities on the flop"
     },
+    new AnalyseTask
+    {
+        GameCase = GameCase.Flop,
+        TableRange = (1, 10),
+        MyHand = ["5♥", "8♥"],
+        MyCombinationFn = hand => hand.HasSet(),
+        Description = "I have pair preflop and set on the flop"
+    },
 ];
 
 AnalyseTask[] analyseTasks = new[]
