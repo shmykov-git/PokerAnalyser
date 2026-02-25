@@ -504,7 +504,15 @@ AnalyseTask[] handSecretTasks =
         TableRange = (1, 10),
         MyHand = ["5♥", "8♥"],
         MyCombinationFn = hand => hand.HasSet(),
-        Description = "I have pair preflop and set on the flop"
+        Description = "I have any hand preflop and set on the flop"
+    },
+    new AnalyseTask
+    {
+        GameCase = GameCase.Flop,
+        TableRange = (1, 10),
+        MyHand = ["5♥", "6♦"],
+        MyCombinationFn = hand => hand.HasSet() || hand.HasStraight() || hand.HasTwoPairs(),
+        Description = "I have connectors preflop and good posion on the flop"
     },
 ];
 
