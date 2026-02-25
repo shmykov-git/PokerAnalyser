@@ -510,9 +510,41 @@ AnalyseTask[] handSecretTasks =
     {
         GameCase = GameCase.Flop,
         TableRange = (1, 10),
-        MyHand = ["5♥", "6♦"],
+        MyHand = ["3♥", "2♦"],
+        MyConditionFn = (hand, flop, _) => hand.Join(flop).HasSet() || !new SortedHand(flop).HasPair(),
         MyCombinationFn = hand => hand.HasSet() || hand.HasStraight() || hand.HasTwoPairs(),
-        Description = "I have connectors preflop and good posion on the flop"
+        Description = "I have connectors preflop and two pair or height on the flop"
+    },
+    new AnalyseTask
+    {
+        GameCase = GameCase.Flop,
+        TableRange = (1, 10),
+        MyHand = ["3♥", "2♦"],
+        MyConditionFn = (hand, flop, _) => hand.Join(flop).HasFourOfAKind() || !new SortedHand(flop).HasSet(),
+        MyCombinationFn = hand => hand.HasSet() || hand.HasStraight(),
+        Description = "I have connectors preflop and set or height on the flop"
+    },
+];
+
+AnalyseTask[] bountyTasks =
+[
+    new AnalyseTask
+    {
+        GameCase = GameCase.Flop,
+        TableRange = (1, 10),
+        MyHand = ["6♥", "2♦"],
+        MyConditionFn = (hand, flop, _) => hand.Join(flop).HasSet() || !new SortedHand(flop).HasPair(),
+        MyCombinationFn = hand => hand.HasSet() || hand.HasStraight() || hand.HasTwoPairs(),
+        Description = "I have nothing preflop and two pair or height on the flop"
+    },
+    new AnalyseTask
+    {
+        GameCase = GameCase.Flop,
+        TableRange = (1, 10),
+        MyHand = ["6♥", "2♦"],
+        MyConditionFn = (hand, flop, _) => hand.Join(flop).HasFourOfAKind() || !new SortedHand(flop).HasSet(),
+        MyCombinationFn = hand => hand.HasSet() || hand.HasStraight(),
+        Description = "I have nothing preflop and set or height on the flop"
     },
 ];
 
@@ -527,7 +559,8 @@ AnalyseTask[] analyseTasks = new[]
     //staightOrFlushSecretTasks,
     //setSecretTasks,
     //pairSecretTasks,
-    handSecretTasks
+    //handSecretTasks,
+    bountyTasks
 }.SelectMany(v => v).ToArray();
 
 
