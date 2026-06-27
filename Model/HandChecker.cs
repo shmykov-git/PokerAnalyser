@@ -345,46 +345,64 @@ public static class HandChecker
 
     public static bool HasStraightFlush(this SortedHand hand)
     {
-        var count = 0;
-        var streetI = -1;
+        var (maxSuit, maxCount) = hand.cards.GroupBy(c => c.suit).OrderByDescending(gc => gc.Count()).Select(gc => (gc.Key, gc.Count())).First();
 
-        for (var i = 0; i < hand.Count - 1; i++)
+        if (maxCount < 5)
+            return false;
+
+        var suitHand = new SortedHand(hand.cards.Where(c => c.suit == maxSuit));
+
+        return suitHand.HasStraight();
+    }
+
+    public static Combination ToCombination(this SortedHand hand)
+    {
+        if (hand.HasStraightFlush())
+            return Combination.StrightFlush;
+
+        if (hand.HasFourOfAKind())
+            return Combination.FourOfAKind;
+
+        if (hand.HasFullHouse())
+            return Combination.FullHouse;
+
+        if (hand.HasFlush())
+            return Combination.Flush;
+
+        if (hand.HasStraight())
+            return Combination.Stright;
+
+        if (hand.HasSet())
+            return Combination.Set;
+
+        if (hand.HasTwoPairs())
+            return Combination.TwoPairs;
+
+        if (hand.HasPair())
+            return Combination.Pair;
+
+        return Combination.HightCard;
+    }
+
+    public static int Win(this SortedHand myHand, SortedHand openentHand)
+    {
+        if (openentHand.Count != 7 || myHand.Count != 7)
+            throw new ArgumentException("Invalid hands. Must be full hand of 7 cards");
+
+        var a = myHand.ToCombination();
+        var b = openentHand.ToCombination();
+
+        if (a == b)
         {
-            if (hand[i].rank == hand[i + 1].rank + 1)
-                count++;
-            else
-                count = 0;
-
-            if (count == 4)
-            {
-                streetI = i;
-                break;
-            }
-        }
-
-        if (hand.LastCard.rank == 2 && hand.FirstCard.rank == 14)
-            count++;
-
-        if (count == 4 && streetI == -1)
-            streetI = 0;
-
-        if (streetI > 0)
-        {
-            var s = '_';
-
+            // algo: compare cards
+            throw new NotImplementedException();
             for (var i = 0; i < 5; i++)
-            {
-                var k = (Cards.cards.Length + streetI - i) % Cards.cards.Length;
+                if (myHand[i].rank > openentHand[i].rank)
+                    return 1;
 
-                if (s == '_')
-                    s = hand[k].suit;
-                else if (hand[k].suit != s)
-                    return false;
-            }
-
-            return true;
+            return 0;
         }
-
-        return false;
+        else
+            return a < b ? 1 : -1;
     }
 }

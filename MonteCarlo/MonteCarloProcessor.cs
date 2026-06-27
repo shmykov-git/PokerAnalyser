@@ -1,4 +1,5 @@
 ﻿using Model;
+using System.Diagnostics;
 
 namespace MonteCarlo;
 
@@ -18,6 +19,9 @@ public static class MonteCarloProcessor
         var rnd = new Random(seed);
         var result = new AnalyseResult() { Description = task.Description };
         var iterCount = task.IterationCount ?? iterationCount ?? 100_000;
+
+        //var myCounts = Enum.GetValues<Combination>().ToDictionary(v => v, v => 0);
+        //var oponentCounts = Enum.GetValues<Combination>().ToDictionary(v => v, v => 0);
 
         for (var n = task.TableRange.from; n <= task.TableRange.to; n++)
         {
@@ -46,6 +50,9 @@ public static class MonteCarloProcessor
 
                 SortedHand GetOponentHand()
                 {
+                    if (task.OponentHand != null)
+                        return deck.TakeExactHand(task.OponentHand);
+
                     if (task.Case == TableCardsCase.OponentHasSameSuited)
                         return deck.TakeSuitedHand(nSuit);
 
@@ -59,15 +66,22 @@ public static class MonteCarloProcessor
                 var tableCards = deck.TakeTableCards(task.GameCase);
                 var flop = tableCards.Length <= 3 ? tableCards : tableCards.Take(3).ToArray();
                 var turn = tableCards.Length <= 3 ? [] : tableCards.Skip(3).Take(1).ToArray();
+                var river = tableCards.Length <= 4 ? [] : tableCards.Skip(4).Take(1).ToArray();
+                var fullHands = hands.Select(hand => new SortedHand(hand.cards.Concat(tableCards))).ToArray();
 
-                var hasCondition = task.MyConditionFn(hands[0], flop, turn) && hands.Any(hand => task.ConditionFn(hand, flop, turn));
+                var hasCondition =
+                    task.MyConditionFn(hands[0], flop, turn) &&
+                    task.MyConditionRFn(hands[0], flop, turn, river) &&
+                    task.ConditionsFn(fullHands) &&
+                    hands.Any(hand => task.ConditionFn(hand, flop, turn) && task.ConditionRFn(hand, flop, turn, river));
 
                 if (!hasCondition)
                     continue;
 
-                conditionCounter++;
+                //myCounts[fullHands[0].ToCombination()]++;
+                //oponentCounts[fullHands[1].ToCombination()]++;
 
-                var fullHands = hands.Select(hand => new SortedHand(hand.cards.Concat(tableCards))).ToArray();
+                conditionCounter++;
                 
                 var hasCombination = 
                     task.MyCombinationFn(fullHands[0]) && 

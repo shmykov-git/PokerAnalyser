@@ -546,7 +546,33 @@ AnalyseTask[] bountyTasks =
         MyCombinationFn = hand => hand.HasSet() || hand.HasStraight(),
         Description = "I have nothing preflop and set or height on the flop"
     },
+    //new AnalyseTask
+    //{
+    //    GameCase = GameCase.Flop,
+    //    TableRange = (1, 10),
+    //    MyHand = ["A♥", "K♦"],
+    //    MyConditionRFn = (hand, flop, turn, river) => !new SortedHand(flop).Join(turn, river).HasTwoPairs(),
+    //    MyCombinationFn = hand => hand.HasPair(Cards.RankK),
+    //    Description = "I have AKo preflop and pair or height on the flop"
+    //},
 ];
+
+AnalyseTask[] fightsTasks =
+[
+    new AnalyseTask
+    {
+        GameCase = GameCase.River,
+        TableRange = (2, 2),
+        MyHand = ["A♥", "K♥"],
+        OponentHand = ["T♣", "T♠"],
+        ConditionsFn = hands => hands[0].Win(hands[1]) != 0,
+        CombinationsFn = hands => hands[0].Win(hands[1]) > 0,
+        Description = "Fight AKs vs TT"
+    },
+];
+
+
+// ♣ ♠ ♥ ♦ 
 
 AnalyseTask[] analyseTasks = new[]
 {
@@ -560,10 +586,9 @@ AnalyseTask[] analyseTasks = new[]
     //setSecretTasks,
     //pairSecretTasks,
     //handSecretTasks,
-    bountyTasks
+    //bountyTasks,
+    fightsTasks
 }.SelectMany(v => v).ToArray();
-
-
 
 
 var result = await MonteCarloProcessor.Analyse(analyseTasks, seed, iterationCount);

@@ -6,7 +6,7 @@
 
 [] - to the combination on the river
 
-
+♣♠♥♦
 Flush secret
 You have a suited pair hand (5♦ Q♦) [1/16]:
  - 2/17 (~1/9) to get flush draw on the flop.
