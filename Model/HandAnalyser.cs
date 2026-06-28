@@ -211,12 +211,14 @@ public static class HandAnalyser
 
     private static Card[] GetStrightFlushWinHand(this SortedHand hand)
     {
-        var wHand = hand.cards.ToArray();
+        var fS = hand.cards.GroupBy(c=>c.suit).MaxBy(gc=>gc.Count())!.Key;
+
+        var wHand = hand.cards.Where(c => c.suit == fS).ToArray();
 
         var j = -1;
         var indices = new List<int>();
 
-        foreach (var i in GetCirclePairIndices(wHand, (a, b) => (a.rank == b.rank + 1 || (a.rank == 2 && b.rank == 14)) && a.suit == b.suit))
+        foreach (var i in GetCirclePairIndices(wHand, (a, b) => a.rank == b.rank + 1 || (a.rank == 2 && b.rank == 14)))
         {
             if (i == j)
             {
@@ -233,7 +235,7 @@ public static class HandAnalyser
         if (indices.Count < 4)
             throw new Exception("Not a stright flush");
 
-        if (indices[^1] != 6)
+        if (indices[^1] != wHand.Length-1)
             indices.Add(indices[^1] + 1);
 
         foreach (var (i, pos) in indices.Select((i, pos) => (i, pos)))
@@ -262,7 +264,7 @@ public static class HandAnalyser
         };
     }
 
-    public static Dictionary<(Combination, Combination), (int, int)> WinStats = new();
+    public static Dictionary<(Combination, Combination), (int, int)>? WinStats = null;
 
     public static int Win(this SortedHand myHand, SortedHand openentHand)
     {
@@ -285,11 +287,13 @@ public static class HandAnalyser
                     var sign = aWin[i].rank > bWin[i].rank ? 1 : -1;
 
                     //Debug.WriteLine($"{string.Join(' ', aWin)} {(sign == 1 ? '>' : '<')} {string.Join(' ', bWin)} {a}");
-
-                    if (WinStats.ContainsKey((a, b)))
-                        WinStats[(a, b)] = sign == 1 ? (WinStats[(a, b)].Item1 + 1, WinStats[(a, b)].Item2) : (WinStats[(a, b)].Item1, WinStats[(a, b)].Item2 + 1);
-                    else
-                        WinStats[(a, b)] = sign == 1 ? (1, 0) : (0, 1);
+                    if (WinStats != null)
+                    {
+                        if (WinStats.ContainsKey((a, b)))
+                            WinStats[(a, b)] = sign == 1 ? (WinStats[(a, b)].Item1 + 1, WinStats[(a, b)].Item2) : (WinStats[(a, b)].Item1, WinStats[(a, b)].Item2 + 1);
+                        else
+                            WinStats[(a, b)] = sign == 1 ? (1, 0) : (0, 1);
+                    }
 
                     return sign;
                 }
@@ -300,10 +304,13 @@ public static class HandAnalyser
         {
             var sign = a > b ? 1 : -1;
 
-            if (WinStats.ContainsKey((a, b)))
-                WinStats[(a, b)] = sign == 1 ? (WinStats[(a, b)].Item1 + 1, WinStats[(a, b)].Item2) : (WinStats[(a, b)].Item1, WinStats[(a, b)].Item2 + 1);
-            else
-                WinStats[(a, b)] = sign == 1 ? (1, 0) : (0, 1);
+            if (WinStats != null)
+            {
+                if (WinStats.ContainsKey((a, b)))
+                    WinStats[(a, b)] = sign == 1 ? (WinStats[(a, b)].Item1 + 1, WinStats[(a, b)].Item2) : (WinStats[(a, b)].Item1, WinStats[(a, b)].Item2 + 1);
+                else
+                    WinStats[(a, b)] = sign == 1 ? (1, 0) : (0, 1);
+            }
 
             return sign;
         }

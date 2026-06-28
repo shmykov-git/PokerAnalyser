@@ -579,6 +579,62 @@ AnalyseTask[] fightsTasks =
         CombinationsFn = hands => hands[0].Win(hands[1]) > 0,
         Description = "Fight AKs vs TT"
     },
+    new AnalyseTask
+    {
+        GameCase = GameCase.River,
+        TableRange = (2, 2),
+        MyHand = ["J♥", "J♣"],
+        OponentHand = ["T♣", "T♠"],
+        ConditionsFn = hands => hands[0].Win(hands[1]) != 0,
+        CombinationsFn = hands => hands[0].Win(hands[1]) > 0,
+        Description = "Fight JJ vs TT"
+    },
+    new AnalyseTask
+    {
+        GameCase = GameCase.River,
+        TableRange = (2, 2),
+        MyHand = ["A♥", "K♦"],
+        OponentHand = ["2♣", "2♠"],
+        ConditionsFn = hands => hands[0].Win(hands[1]) != 0,
+        CombinationsFn = hands => hands[0].Win(hands[1]) > 0,
+        Description = "Fight AK vs 22"
+    },
+    new AnalyseTask
+    {
+        GameCase = GameCase.River,
+        TableRange = (3, 3),
+        MyHand = ["T♥", "T♦"],
+        OponentHands = [["A♣", "K♠"], ["A♦", "Q♠"]],
+        CombinationsFn = hands => hands[0].Win(hands[1]) > 0 && hands[0].Win(hands[2]) > 0,
+        Description = "Fight TT vs AK & AQ"
+    },
+    new AnalyseTask
+    {
+        GameCase = GameCase.River,
+        TableRange = (3, 3),
+        MyHand = ["T♥", "T♦"],
+        OponentHands = [["A♣", "K♠"], ["J♦", "Q♠"]],
+        CombinationsFn = hands => hands[0].Win(hands[1]) > 0 && hands[0].Win(hands[2]) > 0,
+        Description = "Fight TT vs AK & JQ"
+    },
+    new AnalyseTask
+    {
+        GameCase = GameCase.River,
+        TableRange = (3, 3),
+        MyHand = ["T♥", "T♦"],
+        OponentHands = [["A♣", "K♠"], ["A♦", "9♠"]],
+        CombinationsFn = hands => hands[0].Win(hands[1]) > 0 && hands[0].Win(hands[2]) > 0,
+        Description = "Fight TT vs AK & T9"
+    },
+    new AnalyseTask
+    {
+        GameCase = GameCase.River,
+        TableRange = (3, 3),
+        MyHand = ["T♥", "T♦"],
+        OponentHands = [["A♣", "K♠"], ["A♦", "K♣"]],
+        CombinationsFn = hands => hands[0].Win(hands[1]) > 0 && hands[0].Win(hands[2]) > 0,
+        Description = "Fight TT vs AK & AK"
+    },
 ];
 
 
@@ -600,7 +656,7 @@ AnalyseTask[] analyseTasks = new[]
     fightsTasks
 }.SelectMany(v => v).ToArray();
 
-HandAnalyser.WinStats = new();
+//HandAnalyser.WinStats = new();
 
 var result = await MonteCarloProcessor.Analyse(analyseTasks, seed, iterationCount);
 var json = result.ToJson();

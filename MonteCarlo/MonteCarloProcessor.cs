@@ -35,7 +35,7 @@ public static class MonteCarloProcessor
                 var deck = new Deck(rnd);
 
                 var nSuit = Cards.suits[rnd.Next(4)];
-                int nOponent = 1 + rnd.Next(n - 1);
+                int nOponent = 1;// + rnd.Next(n - 1);
 
                 SortedHand GetMyHand()
                 {
@@ -59,9 +59,24 @@ public static class MonteCarloProcessor
                     return deck.TakeHand();
                 }
 
-                var hands = Enumerable.Range(0, n)
-                    .Select(j => j == 0 ? GetMyHand() : (j == nOponent ? GetOponentHand() : deck.TakeHand()))
-                    .ToArray();
+                SortedHand GetOponentHands(int i)
+                {
+                    if (task.OponentHands![i-1] != null)
+                        return deck.TakeExactHand(task.OponentHands![i-1]);
+
+                    if (task.Case == TableCardsCase.OponentHasSameSuited)
+                        return deck.TakeSuitedHand(nSuit);
+
+                    return deck.TakeHand();
+                }
+
+                var hands = task.OponentHands == null
+                    ? Enumerable.Range(0, n)
+                        .Select(j => j == 0 ? GetMyHand() : (j == nOponent ? GetOponentHand() : deck.TakeHand()))
+                        .ToArray()
+                    : Enumerable.Range(0, n)
+                        .Select(j => j == 0 ? GetMyHand() : (j <= task.OponentHands.Length ? GetOponentHands(j) : deck.TakeHand()))
+                        .ToArray();
 
                 var tableCards = deck.TakeTableCards(task.GameCase);
                 var flop = tableCards.Length <= 3 ? tableCards : tableCards.Take(3).ToArray();

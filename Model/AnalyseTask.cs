@@ -5,6 +5,7 @@ public class AnalyseTask
     public GameCase GameCase { get; set; }
     public Card[]? MyHand { get; set; } = null;
     public Card[]? OponentHand { get; set; } = null;
+    public Card[][]? OponentHands { get; set; } = null;
     public Func<SortedHand[], bool> ConditionsFn { get; set; } = _ => true;
     public Func<SortedHand, Card[], Card[], bool> ConditionFn { get; set; } = (_, _, _) => true;
     public Func<SortedHand, Card[], Card[], Card[], bool> ConditionRFn { get; set; } = (_, _, _, _) => true;
