@@ -559,6 +559,16 @@ AnalyseTask[] bountyTasks =
 
 AnalyseTask[] fightsTasks =
 [
+    // 1/4
+    //new AnalyseTask
+    //{
+    //    GameCase = GameCase.River,
+    //    TableRange = (2, 2),
+    //    MyHand = ["A♥", "K♥"],
+    //    OponentHand = ["T♣", "T♠"],
+    //    MyCombinationFn = hand => hand.HasPairStrict() && hand.HasPair(Cards.RankK),
+    //    Description = "AA or KK"
+    //},
     new AnalyseTask
     {
         GameCase = GameCase.River,
@@ -590,6 +600,7 @@ AnalyseTask[] analyseTasks = new[]
     fightsTasks
 }.SelectMany(v => v).ToArray();
 
+HandAnalyser.WinStats = new();
 
 var result = await MonteCarloProcessor.Analyse(analyseTasks, seed, iterationCount);
 var json = result.ToJson();

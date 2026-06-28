@@ -2,7 +2,7 @@
 
 public enum Combination
 {
-    HightCard,
+    HighCard,
     Pair,
     TwoPairs,
     Set,
